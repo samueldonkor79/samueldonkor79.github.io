@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samuel Donkor — Software Developer & PhD Applicant</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #161616;
+    --gold: #c9a84c;
+    --gold-dim: #8a6f32;
+    --white: #f0ece4;
+    --gray: #888070;
+    --border: #2a2520;
+    --accent: #1e3a5f;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--gray);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 300;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-desc {
+    margin-top: 3rem;
+    max-width: 540px;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--gray);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 3rem;
+    padding: 0.9rem 2rem;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards;
+  }
+
+  .hero-cta:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 3rem; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 3rem;
+  }
+
+  /* ── ABOUT ── */
+  .about { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    max-width: 1100px;
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--gray);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text p strong {
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  .about-detail {
+    border-left: 1px solid var(--gold-dim);
+    padding-left: 2rem;
+  }
+
+  .detail-item {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .detail-item:last-child { border-bottom: none; }
+
+  .detail-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .detail-value {
+    font-size: 0.95rem;
+    color: var(--white);
+    line-height: 1.6;
+  }
+
+  .detail-sub {
+    font-size: 0.82rem;
+    color: var(--gray);
+    margin-top: 0.2rem;
+  }
+
+  /* ── SYSTEMS ── */
+  .systems { background: var(--bg); }
+  .systems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    max-width: 1100px;
+  }
+
+  .system-card {
+    background: var(--bg2);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .system-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--gold);
+    transition: height 0.4s ease;
+  }
+
+  .system-card:hover { background: var(--bg3); }
+  .system-card:hover::before { height: 100%; }
+
+  .system-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .system-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .system-client {
+    font-size: 0.82rem;
+    color: var(--gold-dim);
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  .system-desc {
+    font-size: 0.88rem;
+    color: var(--gray);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .system-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: var(--gray);
+    border: 1px solid var(--border);
+    padding: 0.25rem 0.6rem;
+  }
+
+  .tag.live {
+    border-color: var(--gold-dim);
+    color: var(--gold);
+  }
+
+  /* ── RESEARCH ── */
+  .research { background: var(--bg2); border-top: 1px solid var(--border); }
+
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1100px;
+  }
+
+  .research-card {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .research-card:hover { border-color: var(--gold-dim); }
+
+  .research-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--border);
+    line-height: 1;
+    margin-bottom: 1rem;
+    transition: color 0.3s;
+  }
+
+  .research-card:hover .research-num { color: var(--gold-dim); }
+
+  .research-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .research-body {
+    font-size: 0.85rem;
+    color: var(--gray);
+    line-height: 1.75;
+  }
+
+  /* ── AWARD ── */
+  .award-box {
+    background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02));
+    border: 1px solid var(--gold-dim);
+    padding: 3rem;
+    max-width: 800px;
+    position: relative;
+  }
+
+  .award-box::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem;
+    color: var(--gold-dim);
+    opacity: 0.3;
+    position: absolute;
+    top: -1rem;
+    left: 2rem;
+    line-height: 1;
+  }
+
+  .award-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .award-source {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+
+  /* ── SKILLS ── */
+  .skills { background: var(--bg); border-top: 1px solid var(--border); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1100px;
+  }
+
+  .skill-group {}
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-item {
+    font-size: 0.9rem;
+    color: var(--gray);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(42,37,32,0.5);
+    transition: color 0.2s;
+  }
+
+  .skill-item:hover { color: var(--white); }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 6rem 3rem;
+  }
+
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .contact-sub {
+    font-size: 1rem;
+    color: var(--gray);
+    margin-bottom: 3rem;
+    line-height: 1.8;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .contact-link.primary {
+    background: var(--gold);
+    color: var(--bg);
+  }
+
+  .contact-link.primary:hover { background: #e0b85a; }
+
+  .contact-link.secondary {
+    border: 1px solid var(--border);
+    color: var(--gray);
+  }
+
+  .contact-link.secondary:hover {
+    border-color: var(--gold-dim);
+    color: var(--gold);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--gray);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .research-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; flex-wrap: wrap; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">S. Donkor</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#systems">Systems</a>
+    <a href="#research">Research</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Software Developer · Kumasi, Ghana · PhD Applicant 2027</div>
+  <h1 class="hero-name">Samuel<br><em>Donkor</em></h1>
+  <p class="hero-desc">
+    I build the software that runs Ghana's institutions — hospitals, banks, government agencies, schools.
+    Twelve years. Nine production systems. Millions of people served.
+  </p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">12+</div>
+      <div class="stat-label">Years in Production</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">9+</div>
+      <div class="stat-label">Live Systems</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">60%</div>
+      <div class="stat-label">Revenue Increase (KMA)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">7+</div>
+      <div class="stat-label">Banking Clients</div>
+    </div>
+  </div>
+  <a href="#systems" class="hero-cta">View My Work ↓</a>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-label">Background</div>
+  <h2 class="section-title">Practitioner.<br>Researcher. Builder.</h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        In 2014, I deployed a Business and Property Rate Management System for the
+        <strong>Kumasi Metropolitan Assembly</strong> — Ghana's second-largest city government.
+        Revenue collection increased by 60%. The Mayor issued a formal commendation.
+      </p>
+      <p>
+        Over the next decade, I built and maintained nine production systems across
+        Ghana's core public institutions: pension management, healthcare, banking,
+        education, licensing, and city governance. These systems serve
+        <strong>millions of Ghanaians</strong> every day.
+      </p>
+      <p>
+        I am now applying for a PhD in Computer Science to develop the research methodology
+        to study, improve, and scale <strong>AI-driven decision support for civic systems</strong>
+        in resource-constrained, low-data-literacy contexts — the exact environments my
+        software has operated in for twelve years.
+      </p>
+    </div>
+    <div class="about-detail reveal">
+      <div class="detail-item">
+        <div class="detail-label">Education</div>
+        <div class="detail-value">BSc Computer Science</div>
+        <div class="detail-sub">Garden City University College, Ghana · GPA 3.6 / 4.0 · Second Class Upper</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Current Role</div>
+        <div class="detail-value">Founder, SamBridge Technologies</div>
+        <div class="detail-sub">System Developer · Kumasi Metropolitan Assembly · 2013 – Present</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Research Focus</div>
+        <div class="detail-value">AI for Civic & Public Sector Systems</div>
+        <div class="detail-sub">HCI · Decision Support · Federated Learning · African Urban Contexts</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">Recognition</div>
+        <div class="detail-value">Mayoral Commendation</div>
+        <div class="detail-sub">City Mayor Kwadwo Bonsu, KMA · 2014</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEMS -->
+<section class="systems" id="systems">
+  <div class="section-label">Portfolio</div>
+  <h2 class="section-title">Nine Systems.<br>Live in Production.</h2>
+  <div class="systems-grid">
+
+    <div class="system-card reveal">
+      <div class="system-tag">Flagship · 12 Years</div>
+      <div class="system-name">Revenue & Property Rate System</div>
+      <div class="system-client">Kumasi Metropolitan Assembly (KMA)</div>
+      <div class="system-desc">Business and property rate management for Ghana's second-largest city — billing, collection tracking, enforcement, and financial reporting. Drove a 60% increase in municipal revenue collection. Mayoral commendation 2014.</div>
+      <div class="system-stack">
+        <span class="tag live">Live</span>
+        <span class="tag">Java</span><span class="tag">Python</span><span class="tag">PHP</span><span class="tag">Oracle DB</span>
+      </div>
+    </div>
+
+    <div class="system-card reveal">
+      <div class="system-tag">Cloud · 2025</div>
+      <div class="system-name">Pension Fund Management System</div>
+      <div class="system-client">Ghana Govt. Pensioners' Association (GGPA)</div>
+      <div class="system-desc">Comprehensive pension platform for retired government workers — member registration, fund investments, loan management, SMS notifications, deceased tracking, birthday alerts, and financial reporting.</div>
+      <div class="system-stack">
+        <span class="tag live">Live</span>
+        <span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">SMS API</span><span class="tag">Cloud</span>
+      </div>
+    </div>
+
+    <div class="system-card reveal">
+      <div class="system-tag">Banking · 7 Institutions</div>
+      <div class="system-name">Banking Management Systems</div>
+      <div class="system-client">5 Microfinance Institutions + 2 Rural Banks</div>
+      <div class="system-desc">Full banking management for seven financial institutions — account management, deposits, withdrawals, loan processing, interest calculation, staff management, and financial reporting. Serving rural and urban Ghana.</div>
+      <div class="system-stack">
+        <span class="tag live">Live</span>
+        <span class="tag">VB.NET</span><span class="tag">SQL Server</span><span class="tag">Crystal Reports</span>
+      </div>
+    </div>
+
+    <div class="system-card reveal">
+      <div class="system-tag">Healthcare</div>
+      <div class="system-name">Hospital Management System</div>
+      <div class="system-client">Healthcare Institutions, Kumasi</div>
+      <div class="system-desc">Patient records, appointment scheduling, clinical data, billing, staff management, pharmacy inventory, and medical reporting for healthcare facilities across Kumasi.</div>
+      <div class="system-stack">
+        <span class="tag live">Live</span>
+        <span class="tag">VB.NET</span><span class="tag">SQL Server</span><span class="tag">Crystal Reports</span>
+      </div>
+    </div>
+
+    <div class="system-card reveal">
+      <div class="system-tag">Government</div>
+      <div class="system-name">DVLA Management System</div>
+      <div class="system-client">Drivers & Vehicles Licensing Authority</div>
+      <div class="system-desc">Licensing operations system for Ghana's DVLA — driver registration, vehicle registration, licence issuance, renewal processing, and enforcement record management at national scale.</div>
+      <div class="system-stack">
+        <span class="tag live">Live</span>
+        <span class="tag">VB.NET</span><span class="tag">SQL Server</span><span class="tag">Windows</span>
+      </div>
+    </div>
+
+    <div class="system-card reveal">
+      <div class="system-tag">Education</div>
+      <div class="system-name">School Management System</div>
+      <div class="system-client">Educational Institutions, Ghana</div>
+      <div class="system-desc">Student enrolment, academic records, timetable management, examination results, fee management, staff records, and performance reporting for educational institutions across Ghana.</div>
+      <div class="system-stack">
+        <span class="tag live">Live</span>
+        <span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Java</span>
+      </div>
+    </div>
+
+    <div class="system-card reveal">
+      <div class="system-tag">Retail</div>
+      <div class="system-name">Point of Sale System</div>
+      <div class="system-client">Berns Royal Cosmetics & Retailers</div>
+      <div class="system-desc">Full retail management — product and expiry tracking, customer management, VAT-inclusive sales processing, real-time reorder alerts, supplier management, role-based access, and comprehensive reporting.</div>
+      <div class="system-stack">
+        <span class="tag live">Live</span>
+        <span class="tag">VB.NET</span><span class="tag">SQL Server</span><span class="tag">Crystal Reports</span>
+      </div>
+    </div>
+
+    <div class="system-card reveal">
+      <div class="system-tag">Community</div>
+      <div class="system-name">Church Management System</div>
+      <div class="system-client">Religious Institutions, Ghana</div>
+      <div class="system-desc">Membership registration, attendance tracking, financial contributions and tithe management, event management, communication tools, and reporting for religious institutions.</div>
+      <div class="system-stack">
+        <span class="tag live">Live</span>
+        <span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Web</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- AWARD -->
+<section style="background: var(--bg2); border-top: 1px solid var(--border); padding: 6rem 3rem;">
+  <div class="section-label">Recognition</div>
+  <div class="award-box reveal">
+    <div class="award-text">
+      Formally recognised for delivering a 60% increase in property rate revenue collection
+      for the Kumasi Metropolitan Assembly — transforming urban public finance through software.
+    </div>
+    <div class="award-source">— Mayoral Commendation · City Mayor Kwadwo Bonsu · KMA · 2014</div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="research" id="research">
+  <div class="section-label">PhD Research Agenda</div>
+  <h2 class="section-title">Where Practice<br>Meets Research.</h2>
+  <div class="research-grid">
+    <div class="research-card reveal">
+      <div class="research-num">01</div>
+      <div class="research-title">AI Decision Support for Civic Systems</div>
+      <div class="research-body">How can AI-driven decision-support systems be designed for public sector institutions in low-data-literacy, resource-constrained contexts — surfacing uncertainty in ways non-expert users can act on responsibly?</div>
+    </div>
+    <div class="research-card reveal">
+      <div class="research-num">02</div>
+      <div class="research-title">HCI for Non-Expert Users</div>
+      <div class="research-body">What interaction frameworks work for civic workers — hospital clerks, bank officers, pension administrators — who must make consequential decisions using AI systems without formal data or technical training?</div>
+    </div>
+    <div class="research-card reveal">
+      <div class="research-num">03</div>
+      <div class="research-title">Federated Learning for Government Data</div>
+      <div class="research-body">How can multiple disconnected government agencies — each holding sensitive data — benefit from shared AI intelligence without centralising that data, preserving privacy and institutional sovereignty?</div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="section-label">Technical Skills</div>
+  <h2 class="section-title">Stack &amp; Tools</h2>
+  <div class="skills-grid reveal">
+    <div class="skill-group">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-item">Java</div>
+      <div class="skill-item">Python</div>
+      <div class="skill-item">C++</div>
+      <div class="skill-item">PHP</div>
+      <div class="skill-item">VB.NET</div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Databases</div>
+      <div class="skill-item">Oracle Database</div>
+      <div class="skill-item">SQL Server</div>
+      <div class="skill-item">MySQL</div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Platforms</div>
+      <div class="skill-item">Linux</div>
+      <div class="skill-item">Windows</div>
+      <div class="skill-item">Cloud Deployment</div>
+      <div class="skill-item">XAMPP</div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Practice</div>
+      <div class="skill-item">Full-Stack Development</div>
+      <div class="skill-item">Systems Design</div>
+      <div class="skill-item">Technical Documentation</div>
+      <div class="skill-item">Staff Training</div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">ML / AI</div>
+      <div class="skill-item">Python Data Stack</div>
+      <div class="skill-item">scikit-learn</div>
+      <div class="skill-item">NumPy · pandas</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="contact-title">Let's Talk<br><em style="font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--gold);">Research.</em></h2>
+  <p class="contact-sub">
+    Available for PhD research discussions, faculty inquiries, and collaboration.<br>
+    Currently applying for Fall 2027 PhD programs in Computer Science.
+  </p>
+  <div class="contact-links">
+    <a href="mailto:samuel.donkor.dev@gmail.com" class="contact-link primary">
+      Email Me
+    </a>
+    <a href="tel:+233248303380" class="contact-link secondary">
+      +233 248 303 380
+    </a>
+    <a href="#systems" class="contact-link secondary">
+      View Systems
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Samuel Donkor · Kumasi, Ghana · 2025</span>
+  <span>Built with purpose. Every system serves real people.</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
